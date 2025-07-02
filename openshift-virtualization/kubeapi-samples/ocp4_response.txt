@@ -1,0 +1,18 @@
+--2025-07-01 13:08:23--  https://api.cluster-frnjl.dynamic.redhatworkshops.io:6443/oauth/authorize?client_id=openshift-challenging-client&response_type=token
+Resolving api.cluster-frnjl.dynamic.redhatworkshops.io (api.cluster-frnjl.dynamic.redhatworkshops.io)... 150.240.157.104
+Connecting to api.cluster-frnjl.dynamic.redhatworkshops.io (api.cluster-frnjl.dynamic.redhatworkshops.io)|150.240.157.104|:6443... connected.
+WARNING: cannot verify api.cluster-frnjl.dynamic.redhatworkshops.io's certificate, issued by ‘CN=kube-apiserver-lb-signer,OU=openshift’:
+  Self-signed certificate encountered.
+HTTP request sent, awaiting response... 
+  HTTP/1.1 403 Forbidden
+  Audit-Id: ebefe3ab-8385-4bde-ae61-903fc9745423
+  Cache-Control: no-cache, private
+  Content-Type: application/json
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  X-Kubernetes-Pf-Flowschema-Uid: fd56a9b1-40b6-40a6-8abf-7d1fc542b71a
+  X-Kubernetes-Pf-Prioritylevel-Uid: a657c758-2d8e-4d08-ae5c-2e60b4c7698f
+  Date: Tue, 01 Jul 2025 07:38:24 GMT
+  Content-Length: 232
+2025-07-01 13:08:24 ERROR 403: Forbidden.
+
