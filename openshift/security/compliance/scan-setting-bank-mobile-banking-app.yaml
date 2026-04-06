@@ -1,0 +1,42 @@
+apiVersion: compliance.openshift.io/v1alpha1
+kind: ScanSetting
+maxRetryOnTimeout: 3
+metadata:
+  # creationTimestamp: "2025-11-08T12:23:04Z"
+  # generation: 1
+  name: bank-mobile-banking-app
+  namespace: openshift-compliance
+  # resourceVersion: "52928"
+  # uid: e8c2a737-907d-464e-88a0-173304c0143d
+rawResultStorage:
+  nodeSelector:
+    node-role.kubernetes.io/master: ""
+  pvAccessModes:
+  - ReadWriteOnce
+  rotation: 3
+  size: 1Gi
+  tolerations:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/master
+    operator: Exists
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoSchedule
+    key: node.kubernetes.io/memory-pressure
+    operator: Exists
+roles:
+- master
+- worker
+scanTolerations:
+- operator: Exists
+schedule: "*/30 * * * *"
+showNotApplicable: false
+strictNodeScan: true
+suspend: false
+timeout: 30m
