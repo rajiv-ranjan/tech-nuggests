@@ -1,0 +1,39 @@
+sequenceDiagram
+    autonumber
+    actor User as Dev/Ops User (Browser or roxctl)
+    box Internal Enterprise Network
+    participant Sensor as RHACS Sensor (Secured Cluster)
+    participant Central as RHACS Central (Hub Cluster)
+    participant Zscaler as Zscaler SSLO Engine
+    participant Proxy as Corporate Web Proxy
+    end
+    box Public Internet
+    participant External as External Feeds (definitions.stackrox.io)
+    end
+
+    %% FLOW 1: Outbound Egress Inspection Flow
+    rect rgb(230, 242, 255)
+        Note over Sensor, External: FLOW 1: Outbound Egress Inspection Flow (Vulnerability & Driver Updates)
+        Central->>Zscaler: HTTPS Request to download CVE data [Port 443]
+        Note over Zscaler: Decrypts Payload & Performs Security Inspection
+        Zscaler->>Proxy: Re-encrypts payload & proxies forward (Signed by Zscaler CA)
+        Proxy->>External: Routes connection out to StackRox/Red Hat endpoints [Port 443]
+        External-->>Proxy: Returns raw database update payload / VEX feeds
+        Proxy-->>Zscaler: Forwards payload back into network
+        Zscaler-->>Central: Delivers verified payload (Succeeds because Zscaler CA is injected into ACS)
+    end
+
+    %% Tunneling note for Sensor
+    rect rgb(255, 255, 255)
+        Note over Sensor, Central: Secure Sensor-to-Central Tunneling Note
+        Sensor->>Central: Sensor requests kernel modules over secure gRPC tunnel [Port 443]
+        Note over Central: Central initiates internet download on Sensor's behalf via Flow 1
+    end
+
+    %% FLOW 2: Ingress User Access Flow
+    rect rgb(242, 230, 255)
+        Note over User, Central: FLOW 2: Ingress User Access Flow (Portal & CLI Management)
+        User->>Central: Connect to ACS Portal UI or execute CLI API command [Port 443]
+        Central-->>User: Presents default Self-Signed Certificate
+        Note over User: Browser triggers untrusted warning OR roxctl uses '--insecure-skip-tls-verify'
+    end

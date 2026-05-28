@@ -1,0 +1,170 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: tutorial-application
+---
+# This deployment and service are for the first backend service. It is a Python application.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend1-deployment
+  namespace: tutorial-application
+  labels:
+    app: backend1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend1
+  template:
+    metadata:
+      labels:
+        app: backend1
+      annotations:
+        # instrumentation.opentelemetry.io/inject-sdk: "my-instrumentation"
+        instrumentation.opentelemetry.io/inject-python: "true"
+    spec:
+      containers:
+      - name: backend1
+        image: ghcr.io/pavolloffay/kubecon-eu-2023-opentelemetry-kubernetes-tutorial-backend1:latest 
+        ports:
+        - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend1-service
+  namespace: tutorial-application
+  labels:
+    app: backend1
+spec:
+  ports:
+  - name: http
+    port: 5000
+    targetPort: 5000
+  selector:
+    app: backend1
+---
+# This deployment is for the second backend service, which is a Java application.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend2-deployment
+  namespace: tutorial-application
+  labels:
+    app: backend2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend2
+  template:
+    metadata:
+      labels:
+        app: backend2
+      annotations:
+        # This annotation is used to inject the OpenTelemetry SDK into the container.
+        # instrumentation.opentelemetry.io/inject-sdk: "my-instrumentation"
+
+        # This annotation is used to auto-inject the OpenTelemetry Java agent into the container. Namespace must contain only one instance of Instrumentation.
+        instrumentation.opentelemetry.io/inject-java: "true"
+        
+        # If there are more than one Instrumentation in the namespace, you can specify the name of the Instrumentation to use.
+        # instrumentation.opentelemetry.io/inject-java: "my-instrumentation"
+
+        # If the Instrumentation is not in the same namespace, you can specify the namespace and name of the Instrumentation.
+        # instrumentation.opentelemetry.io/inject-java: "namespace/my-instrumentation"
+
+    spec:
+      containers:
+      - name: backend2
+        image: ghcr.io/pavolloffay/kubecon-eu-2023-opentelemetry-kubernetes-tutorial-backend2:latest
+        ports:
+        - containerPort: 5165
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend2-service
+  namespace: tutorial-application
+spec:
+  ports:
+  - name: http
+    port: 5165
+    targetPort: 5165
+  selector:
+    app: backend2
+---
+# This deployment and service are for the frontend service, which is a Node.js application.
+# The frontend service communicates with the two backend services.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+  namespace: tutorial-application
+  labels:
+    app: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+      annotations:
+        # instrumentation.opentelemetry.io/inject-sdk: "my-instrumentation"
+        instrumentation.opentelemetry.io/inject-nodejs: "true"
+    spec:
+      containers:
+      - name: frontend
+        image: ghcr.io/pavolloffay/kubecon-eu-2023-opentelemetry-kubernetes-tutorial-frontend:latest
+        env:
+          # - name: OTEL_INSTRUMENTATION_ENABLED
+          #   value: "true"
+          - name: BACKEND1_URL
+            value: "http://backend1-service:5000/rolldice"
+          - name: BACKEND2_URL
+            value: "http://backend2-service:5165/rolldice"
+        ports:
+        - containerPort: 4000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  namespace: tutorial-application
+spec:
+  ports:
+  - name: http
+    port: 4000
+    targetPort: 4000
+  selector:
+    app: frontend
+---
+# This deployment is for the load generator service, which generates load on the frontend service.
+# It is used to simulate traffic to the application.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: loadgen-deployment
+  namespace: tutorial-application
+  labels:
+    app: loadgen
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: loadgen
+  template:
+    metadata:
+      labels:
+        app: loadgen
+    spec:
+      containers:
+      - name: frontend
+        image: ghcr.io/pavolloffay/kubecon-eu-2023-opentelemetry-kubernetes-tutorial-loadgen:latest
+        env:
+          - name: URL
+            value: "http://frontend-service:4000/"

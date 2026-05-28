@@ -236,3 +236,9 @@ __marimo__/
 
 
 must-gather*
+
+.DS_Store
+
+# Generated diagram files
+generated-diagram/
+diagram-index.html

@@ -1,0 +1,148 @@
+apiVersion: opentelemetry.io/v1beta1
+kind: OpenTelemetryCollector
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: '5'
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"opentelemetry.io/v1beta1","kind":"OpenTelemetryCollector","metadata":{"annotations":{"argocd.argoproj.io/sync-wave":"5"},"labels":{"app.kubernetes.io/instance":"opentelemetrycollector"},"name":"otel","namespace":"opentelemetrycollector"},"spec":{"config":{"exporters":{"otlp":{"endpoint":"tempo-sample-distributor.tracing-system.svc.cluster.local:4317","tls":{"insecure":true}}},"receivers":{"otlp":{"protocols":{"grpc":{"endpoint":"0.0.0.0:4317"}}}},"service":{"pipelines":{"traces":{"exporters":["otlp"],"receivers":["otlp"]}}}}}}
+  resourceVersion: '32956'
+  name: otel
+  uid: 6b86ef9a-b614-4fd5-874b-41cdb489f587
+  creationTimestamp: '2025-07-06T09:55:30Z'
+  generation: 1
+  managedFields:
+    - apiVersion: opentelemetry.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:argocd.argoproj.io/sync-wave': {}
+            'f:kubectl.kubernetes.io/last-applied-configuration': {}
+          'f:labels':
+            .: {}
+            'f:app.kubernetes.io/instance': {}
+        'f:spec':
+          .: {}
+          'f:config':
+            .: {}
+            'f:exporters':
+              .: {}
+              'f:otlp':
+                .: {}
+                'f:endpoint': {}
+                'f:tls':
+                  .: {}
+                  'f:insecure': {}
+            'f:receivers':
+              .: {}
+              'f:otlp':
+                .: {}
+                'f:protocols':
+                  .: {}
+                  'f:grpc':
+                    .: {}
+                    'f:endpoint': {}
+            'f:service':
+              .: {}
+              'f:pipelines':
+                .: {}
+                'f:traces':
+                  .: {}
+                  'f:exporters': {}
+                  'f:receivers': {}
+          'f:configVersions': {}
+          'f:ipFamilyPolicy': {}
+          'f:managementState': {}
+          'f:replicas': {}
+      manager: argocd-controller
+      operation: Update
+      time: '2025-07-06T09:55:30Z'
+    - apiVersion: opentelemetry.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:finalizers':
+            .: {}
+            'v:"opentelemetrycollector.opentelemetry.io/finalizer"': {}
+      manager: opentelemetry-operator
+      operation: Update
+      time: '2025-07-06T09:55:30Z'
+    - apiVersion: opentelemetry.io/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          .: {}
+          'f:image': {}
+          'f:scale':
+            .: {}
+            'f:replicas': {}
+            'f:selector': {}
+            'f:statusReplicas': {}
+          'f:version': {}
+      manager: opentelemetry-operator
+      operation: Update
+      subresource: status
+      time: '2025-07-06T09:55:55Z'
+  namespace: opentelemetrycollector
+  finalizers:
+    - opentelemetrycollector.opentelemetry.io/finalizer
+  labels:
+    app.kubernetes.io/instance: opentelemetrycollector
+spec:
+  observability:
+    metrics: {}
+  deploymentUpdateStrategy: {}
+  config:
+    exporters:
+      otlp:
+        endpoint: 'tempo-sample-distributor.tracing-system.svc.cluster.local:4317'
+        tls:
+          insecure: true
+    receivers:
+      otlp:
+        protocols:
+          grpc:
+            endpoint: '0.0.0.0:4317'
+    service:
+      pipelines:
+        traces:
+          exporters:
+            - otlp
+          receivers:
+            - otlp
+      telemetry:
+        metrics:
+          readers:
+            - pull:
+                exporter:
+                  prometheus:
+                    host: 0.0.0.0
+                    port: 8888
+  mode: deployment
+  resources: {}
+  podDnsConfig: {}
+  managementState: managed
+  upgradeStrategy: automatic
+  ingress:
+    route: {}
+  daemonSetUpdateStrategy: {}
+  targetAllocator:
+    allocationStrategy: consistent-hashing
+    collectorNotReadyGracePeriod: 30s
+    filterStrategy: relabel-config
+    observability:
+      metrics: {}
+    prometheusCR:
+      scrapeInterval: 30s
+    resources: {}
+  replicas: 1
+  ipFamilyPolicy: SingleStack
+  configVersions: 3
+status:
+  image: 'registry.redhat.io/rhosdt/opentelemetry-collector-rhel8@sha256:ba8a96cdfbcc565cdc0c013ae8de431a3b5f8a4802630f23c2fc1ce3e37e951c'
+  scale:
+    replicas: 1
+    selector: 'app.kubernetes.io/component=opentelemetry-collector,app.kubernetes.io/instance=opentelemetrycollector.otel,app.kubernetes.io/managed-by=opentelemetry-operator,app.kubernetes.io/name=otel-collector,app.kubernetes.io/part-of=opentelemetry,app.kubernetes.io/version=latest'
+    statusReplicas: 1/1
+  version: 0.127.0

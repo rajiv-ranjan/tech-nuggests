@@ -1,0 +1,10 @@
+[project]
+name = "diagram-viewer"
+version = "0.1.0"
+description = "Mermaid diagram converter and viewer for tech-nuggests repository"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = []
+
+[project.scripts]
+diagram-viewer = "mermaid_converter:main"

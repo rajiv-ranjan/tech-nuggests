@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: privileged-tool-pod
+  labels:
+    app: security-demo
+    severity: critical # Adding a label to help you find it easily
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: security-demo
+  template:
+    metadata:
+      labels:
+        app: security-demo
+    spec:
+      containers:
+        - name: netshoot-tools
+          # Using netshoot because it has curl, netstat, nmap, tcpdump pre-installed
+          image: nicolaka/netshoot 
+          # This command keeps the pod running indefinitely
+          command: ["/bin/sh", "-c", "sleep infinity"]
+          securityContext:
+            # THIS is the specific line ACS will detect as a violation
+            privileged: true
+            # Optional: Start as root to ensure full access
+            runAsUser: 0

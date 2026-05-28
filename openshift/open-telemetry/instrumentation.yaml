@@ -1,0 +1,106 @@
+apiVersion: opentelemetry.io/v1alpha1
+kind: Instrumentation
+metadata:
+  name: my-instrumentation
+  namespace: tutorial-application
+spec:
+  env:
+    - name: OTEL_EXPORTER_OTLP_TIMEOUT
+      value: "20"
+  # https://docs.redhat.com/en/documentation/openshift_container_platform/4.19/html-single/red_hat_build_of_opentelemetry/index#otel-instrumentation-options_exporter_otel-configuration-of-instrumentation
+  exporter:
+    endpoint: http://otel-collector.observability.svc.cluster.local:4318
+  
+  # Known values for OTEL_PROPAGATORS are:
+  # "tracecontext": W3C Trace Context   https://www.w3.org/TR/trace-context/
+  # "baggage": W3C Baggage              https://www.w3.org/TR/baggage/
+  # "b3": B3 Single                     https://opentelemetry.io/docs/specs/otel/context/api-propagators/#configuration
+  # "b3multi": B3 Multi                 https://opentelemetry.io/docs/specs/otel/context/api-propagators/#configuration
+  # "jaeger": Jaeger                    https://www.jaegertracing.io/sdk-migration/#propagation-format
+  # "xray": AWS X-Ray (third party)     https://docs.aws.amazon.com/xray/latest/devguide/xray-concepts.html#xray-concepts-tracingheader
+  # "ottrace": OT Trace (third party)   https://github.com/opentracing?q=basic&type=&language=
+  # "none": No automatically configured propagator.
+  # propagators: tracecontext, baggage, b3, b3multi, jaeger, ottrace, none
+  propagators:
+    - tracecontext
+    - baggage
+    - b3
+  
+  # resource:
+
+
+
+  # Known values for OTEL_TRACES_SAMPLER are:
+
+  # "always_on": AlwaysOnSampler
+  # "always_off": AlwaysOffSampler
+  # "traceidratio": TraceIdRatioBased
+  # "parentbased_always_on": ParentBased(root=AlwaysOnSampler)
+  # "parentbased_always_off": ParentBased(root=AlwaysOffSampler)
+  # "parentbased_traceidratio": ParentBased(root=TraceIdRatioBased)
+  # "parentbased_jaeger_remote": ParentBased(root=JaegerRemoteSampler)
+  # "jaeger_remote": JaegerRemoteSampler
+  # "xray": AWS X-Ray Centralized Sampling (third party)                  https://docs.aws.amazon.com/xray/latest/devguide/xray-console-sampling.html
+
+  sampler:
+    type: parentbased_traceidratio
+    argument: "1"
+  
+  # upstream documentation: https://opentelemetry.io/docs/languages/java/configuration/
+  # Instrumentation for different languages
+  # apacheHttpd, dotnet, go, java, python, nodejs
+  java:
+    # env, image, resourceRequirements
+    env:
+    - name: OTEL_JAVAAGENT_DEBUG
+      value: "true"
+    - name: OTEL_EXPORTER_OTLP_ENDPOINT
+      value: http://otel-collector.observability.svc.cluster.local:4317
+    - name: OTEL_EXPORTER_OTLP_PROTOCOL
+      value: "grpc" # try http/protobuf
+    - name: OTEL_EXPORTER_OTLP_INSECURE
+      value: "true"
+
+  python:
+    # env, image, resourceRequirements
+    env:
+      # Required if endpoint is set to 4317.
+      # Python autoinstrumentation uses http/proto by default
+      # so data must be sent to 4318 instead of 4317.
+      - name: OTEL_EXPORTER_OTLP_ENDPOINT
+        value: http://otel-collector.observability.svc.cluster.local:4318
+
+
+
+# Instrumentation Mapping of languages to default protocols.
+# Auto-instrumentation	Default protocol
+# Java 1.x              otlp/grpc
+# Java 2.x              otlp/http
+# Python                otlp/http
+# .NET                  otlp/http
+# Go                    otlp/http
+# Apache HTTP Server    otlp/grpc
+
+
+# environment variables for OpenTelemetry SDK configuration: https://opentelemetry.io/docs/specs/otel/configuration/sdk-environment-variables/#general-sdk-configuration
+
+# Some of the useful OTEL environment variables:
+# OTEL_EXPORTER_OTLP_ENDPOINT: The endpoint to which the OpenTelemetry Collector sends data
+# OTEL_EXPORTER_OTLP_TIMEOUT: The timeout for the OpenTelemetry Collector to send data
+# OTEL_EXPORTER_OTLP_PROTOCOL: The protocol used to send data to the OpenTelemetry Collector
+# OTEL_EXPORTER_OTLP_HEADERS: The headers to be sent to the OpenTelemetry Collector
+# OTEL_EXPORTER_OTLP_COMPRESSION: The compression algorithm used to send data to the OpenTelemetry Collector
+# OTEL_EXPORTER_OTLP_CERTIFICATE: The certificate used to authenticate the OpenTelemetry Collector
+# OTEL_EXPORTER_OTLP_TLS: The TLS configuration used to send data to the OpenTelemetry Collector
+# OTEL_EXPORTER_OTLP_INSECURE: Whether to use insecure connection to the OpenTelemetry Collector
+
+# Below are some of the common OpenTelemetry environment variables that can be set when injecting the SDK into applications:
+# OTEL_SERVICE_NAME
+# OTEL_TRACES_SAMPLER
+# OTEL_TRACES_SAMPLER_ARG
+# OTEL_PROPAGATORS
+# OTEL_RESOURCE_ATTRIBUTES
+# OTEL_EXPORTER_OTLP_ENDPOINT
+# OTEL_EXPORTER_OTLP_CERTIFICATE
+# OTEL_EXPORTER_OTLP_CLIENT_CERTIFICATE
+# OTEL_EXPORTER_OTLP_CLIENT_KEY

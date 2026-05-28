@@ -1,0 +1,838 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  generateName: instance-
+  annotations:
+    k8s.ovn.org/pod-networks: '{"default":{"ip_addresses":["10.128.0.184/23"],"mac_address":"0a:58:0a:80:00:b8","gateway_ips":["10.128.0.1"],"routes":[{"dest":"10.128.0.0/14","nextHop":"10.128.0.1"},{"dest":"172.30.0.0/16","nextHop":"10.128.0.1"},{"dest":"169.254.0.5/32","nextHop":"10.128.0.1"},{"dest":"100.64.0.0/16","nextHop":"10.128.0.1"}],"ip_address":"10.128.0.184/23","gateway_ip":"10.128.0.1","role":"primary"}}'
+    k8s.v1.cni.cncf.io/network-status: |-
+      [{
+          "name": "ovn-kubernetes",
+          "interface": "eth0",
+          "ips": [
+              "10.128.0.184"
+          ],
+          "mac": "0a:58:0a:80:00:b8",
+          "default": true,
+          "dns": {}
+      }]
+    observability.openshift.io/secret-hash: '5476042792746345077'
+    openshift.io/scc: logging-scc
+    seccomp.security.alpha.kubernetes.io/pod: runtime/default
+  resourceVersion: '1752752'
+  name: instance-2tfkj
+  uid: f48d8c98-647e-42fa-84dd-bd477fd31cea
+  creationTimestamp: '2025-12-03T09:41:20Z'
+  managedFields:
+    - manager: ip-10-0-62-107
+      operation: Update
+      apiVersion: v1
+      time: '2025-12-03T09:41:20Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            'f:k8s.ovn.org/pod-networks': {}
+      subresource: status
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: v1
+      time: '2025-12-03T09:41:20Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:observability.openshift.io/secret-hash': {}
+            'f:target.workload.openshift.io/management': {}
+          'f:generateName': {}
+          'f:labels':
+            'f:controller-revision-hash': {}
+            'f:app.kubernetes.io/managed-by': {}
+            'f:vector.dev/exclude': {}
+            'f:app.kubernetes.io/name': {}
+            .: {}
+            'f:pod-template-generation': {}
+            'f:app.kubernetes.io/part-of': {}
+            'f:app.kubernetes.io/version': {}
+            'f:app.kubernetes.io/instance': {}
+            'f:app.kubernetes.io/component': {}
+          'f:ownerReferences':
+            .: {}
+            'k:{"uid":"741d6a7e-963c-463f-9bce-e268146483f8"}': {}
+        'f:spec':
+          'f:volumes':
+            'k:{"name":"entrypoint"}':
+              .: {}
+              'f:configMap':
+                .: {}
+                'f:defaultMode': {}
+                'f:name': {}
+              'f:name': {}
+            'k:{"name":"varlogkubeapiserver"}':
+              .: {}
+              'f:hostPath':
+                .: {}
+                'f:path': {}
+                'f:type': {}
+              'f:name': {}
+            'k:{"name":"config"}':
+              .: {}
+              'f:configMap':
+                .: {}
+                'f:defaultMode': {}
+                'f:name': {}
+              'f:name': {}
+            'k:{"name":"varlogopenshiftapiserver"}':
+              .: {}
+              'f:hostPath':
+                .: {}
+                'f:path': {}
+                'f:type': {}
+              'f:name': {}
+            'k:{"name":"varlogoauthapiserver"}':
+              .: {}
+              'f:hostPath':
+                .: {}
+                'f:path': {}
+                'f:type': {}
+              'f:name': {}
+            'k:{"name":"tmp"}':
+              .: {}
+              'f:emptyDir':
+                .: {}
+                'f:medium': {}
+              'f:name': {}
+            'k:{"name":"varlogjournal"}':
+              .: {}
+              'f:hostPath':
+                .: {}
+                'f:path': {}
+                'f:type': {}
+              'f:name': {}
+            .: {}
+            'k:{"name":"varlogoauthserver"}':
+              .: {}
+              'f:hostPath':
+                .: {}
+                'f:path': {}
+                'f:type': {}
+              'f:name': {}
+            'k:{"name":"varlogpods"}':
+              .: {}
+              'f:hostPath':
+                .: {}
+                'f:path': {}
+                'f:type': {}
+              'f:name': {}
+            'k:{"name":"varlogaudit"}':
+              .: {}
+              'f:hostPath':
+                .: {}
+                'f:path': {}
+                'f:type': {}
+              'f:name': {}
+            'k:{"name":"config-openshift-service-cacrt"}':
+              .: {}
+              'f:configMap':
+                .: {}
+                'f:defaultMode': {}
+                'f:name': {}
+              'f:name': {}
+            'k:{"name":"datadir"}':
+              .: {}
+              'f:hostPath':
+                .: {}
+                'f:path': {}
+                'f:type': {}
+              'f:name': {}
+            'k:{"name":"metrics"}':
+              .: {}
+              'f:name': {}
+              'f:secret':
+                .: {}
+                'f:defaultMode': {}
+                'f:secretName': {}
+            'k:{"name":"trusted-ca"}':
+              .: {}
+              'f:configMap':
+                .: {}
+                'f:defaultMode': {}
+                'f:items': {}
+                'f:name': {}
+              'f:name': {}
+            'k:{"name":"varlogovn"}':
+              .: {}
+              'f:hostPath':
+                .: {}
+                'f:path': {}
+                'f:type': {}
+              'f:name': {}
+            'k:{"name":"logging-collector-token"}':
+              .: {}
+              'f:name': {}
+              'f:secret':
+                .: {}
+                'f:defaultMode': {}
+                'f:secretName': {}
+            'k:{"name":"sa-token"}':
+              .: {}
+              'f:name': {}
+              'f:projected':
+                .: {}
+                'f:defaultMode': {}
+                'f:sources': {}
+          'f:containers':
+            'k:{"name":"collector"}':
+              'f:image': {}
+              'f:volumeMounts':
+                'k:{"mountPath":"/var/log/ovn"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                  'f:readOnly': {}
+                'k:{"mountPath":"/var/log/oauth-apiserver"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                  'f:readOnly': {}
+                'k:{"mountPath":"/var/log/openshift-apiserver"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                  'f:readOnly': {}
+                'k:{"mountPath":"/tmp"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                'k:{"mountPath":"/etc/vector"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                  'f:readOnly': {}
+                'k:{"mountPath":"/var/log/pods"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                  'f:readOnly': {}
+                'k:{"mountPath":"/usr/bin/run-vector.sh"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                  'f:readOnly': {}
+                  'f:subPath': {}
+                .: {}
+                'k:{"mountPath":"/var/run/ocp-collector/secrets/logging-collector-token"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                  'f:readOnly': {}
+                'k:{"mountPath":"/var/log/journal"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                  'f:readOnly': {}
+                'k:{"mountPath":"/var/log/oauth-server"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                  'f:readOnly': {}
+                'k:{"mountPath":"/etc/collector/metrics"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                  'f:readOnly': {}
+                'k:{"mountPath":"/var/log/audit"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                  'f:readOnly': {}
+                'k:{"mountPath":"/var/log/kube-apiserver"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                  'f:readOnly': {}
+                'k:{"mountPath":"/var/lib/vector"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                'k:{"mountPath":"/etc/pki/ca-trust/extracted/pem/"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                  'f:readOnly': {}
+                'k:{"mountPath":"/var/run/ocp-collector/config/openshift-service-ca.crt"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                  'f:readOnly': {}
+                'k:{"mountPath":"/var/run/ocp-collector/serviceaccount"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                  'f:readOnly': {}
+              'f:terminationMessagePolicy': {}
+              .: {}
+              'f:resources':
+                .: {}
+                'f:limits':
+                  .: {}
+                  'f:cpu': {}
+                  'f:memory': {}
+                'f:requests':
+                  .: {}
+                  'f:cpu': {}
+                  'f:memory': {}
+              'f:args': {}
+              'f:command': {}
+              'f:env':
+                'k:{"name":"K8S_NODE_NAME"}':
+                  .: {}
+                  'f:name': {}
+                  'f:valueFrom':
+                    .: {}
+                    'f:fieldRef': {}
+                'k:{"name":"VECTOR_SELF_NODE_NAME"}':
+                  .: {}
+                  'f:name': {}
+                  'f:valueFrom':
+                    .: {}
+                    'f:fieldRef': {}
+                'k:{"name":"POD_IPS"}':
+                  .: {}
+                  'f:name': {}
+                  'f:valueFrom':
+                    .: {}
+                    'f:fieldRef': {}
+                'k:{"name":"POD_IP"}':
+                  .: {}
+                  'f:name': {}
+                  'f:valueFrom':
+                    .: {}
+                    'f:fieldRef': {}
+                'k:{"name":"COLLECTOR_CONF_HASH"}':
+                  .: {}
+                  'f:name': {}
+                  'f:value': {}
+                'k:{"name":"OPENSHIFT_CLUSTER_ID"}':
+                  .: {}
+                  'f:name': {}
+                  'f:value': {}
+                'k:{"name":"VECTOR_LOG"}':
+                  .: {}
+                  'f:name': {}
+                  'f:value': {}
+                .: {}
+                'k:{"name":"NODE_IPV4"}':
+                  .: {}
+                  'f:name': {}
+                  'f:valueFrom':
+                    .: {}
+                    'f:fieldRef': {}
+                'k:{"name":"TRUSTED_CA_HASH"}':
+                  .: {}
+                  'f:name': {}
+                  'f:value': {}
+                'k:{"name":"KUBERNETES_SERVICE_HOST"}':
+                  .: {}
+                  'f:name': {}
+                  'f:value': {}
+              'f:securityContext':
+                .: {}
+                'f:allowPrivilegeEscalation': {}
+                'f:capabilities':
+                  .: {}
+                  'f:drop': {}
+                'f:readOnlyRootFilesystem': {}
+                'f:seLinuxOptions':
+                  .: {}
+                  'f:type': {}
+                'f:seccompProfile':
+                  .: {}
+                  'f:type': {}
+              'f:terminationMessagePath': {}
+              'f:imagePullPolicy': {}
+              'f:ports':
+                .: {}
+                'k:{"containerPort":24231,"protocol":"TCP"}':
+                  .: {}
+                  'f:containerPort': {}
+                  'f:name': {}
+                  'f:protocol': {}
+              'f:name': {}
+          'f:dnsPolicy': {}
+          'f:tolerations': {}
+          'f:priorityClassName': {}
+          'f:serviceAccount': {}
+          'f:restartPolicy': {}
+          'f:schedulerName': {}
+          'f:nodeSelector': {}
+          'f:terminationGracePeriodSeconds': {}
+          'f:serviceAccountName': {}
+          'f:enableServiceLinks': {}
+          'f:securityContext': {}
+          'f:affinity':
+            .: {}
+            'f:nodeAffinity':
+              .: {}
+              'f:requiredDuringSchedulingIgnoredDuringExecution': {}
+    - manager: multus-daemon
+      operation: Update
+      apiVersion: v1
+      time: '2025-12-03T09:41:20Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            'f:k8s.v1.cni.cncf.io/network-status': {}
+      subresource: status
+    - manager: kubelet
+      operation: Update
+      apiVersion: v1
+      time: '2025-12-03T09:41:21Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          'f:conditions':
+            'k:{"type":"ContainersReady"}':
+              .: {}
+              'f:lastProbeTime': {}
+              'f:lastTransitionTime': {}
+              'f:status': {}
+              'f:type': {}
+            'k:{"type":"Initialized"}':
+              .: {}
+              'f:lastProbeTime': {}
+              'f:lastTransitionTime': {}
+              'f:status': {}
+              'f:type': {}
+            'k:{"type":"PodReadyToStartContainers"}':
+              .: {}
+              'f:lastProbeTime': {}
+              'f:lastTransitionTime': {}
+              'f:status': {}
+              'f:type': {}
+            'k:{"type":"Ready"}':
+              .: {}
+              'f:lastProbeTime': {}
+              'f:lastTransitionTime': {}
+              'f:status': {}
+              'f:type': {}
+          'f:containerStatuses': {}
+          'f:hostIP': {}
+          'f:hostIPs': {}
+          'f:phase': {}
+          'f:podIP': {}
+          'f:podIPs':
+            .: {}
+            'k:{"ip":"10.128.0.184"}':
+              .: {}
+              'f:ip': {}
+          'f:startTime': {}
+      subresource: status
+  namespace: openshift-logging
+  ownerReferences:
+    - apiVersion: apps/v1
+      kind: DaemonSet
+      name: instance
+      uid: 741d6a7e-963c-463f-9bce-e268146483f8
+      controller: true
+      blockOwnerDeletion: true
+  labels:
+    pod-template-generation: '4'
+    app.kubernetes.io/part-of: cluster-logging
+    app.kubernetes.io/instance: instance
+    app.kubernetes.io/version: 6.4.0
+    app.kubernetes.io/component: collector
+    controller-revision-hash: 766bbc6d7f
+    app.kubernetes.io/managed-by: cluster-logging-operator
+    vector.dev/exclude: 'true'
+    app.kubernetes.io/name: vector
+spec:
+  nodeSelector:
+    kubernetes.io/os: linux
+  restartPolicy: Always
+  serviceAccountName: logging-collector
+  imagePullSecrets:
+    - name: logging-collector-dockercfg-6tvqq
+  priority: 2000001000
+  schedulerName: default-scheduler
+  enableServiceLinks: true
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchFields:
+              - key: metadata.name
+                operator: In
+                values:
+                  - ip-10-0-62-107.us-east-2.compute.internal
+  terminationGracePeriodSeconds: 10
+  preemptionPolicy: PreemptLowerPriority
+  nodeName: ip-10-0-62-107.us-east-2.compute.internal
+  securityContext:
+    seccompProfile:
+      type: RuntimeDefault
+  containers:
+    - resources:
+        limits:
+          cpu: '6'
+          memory: 2Gi
+        requests:
+          cpu: 500m
+          memory: 64Mi
+      terminationMessagePath: /dev/termination-log
+      name: collector
+      command:
+        - sh
+      env:
+        - name: COLLECTOR_CONF_HASH
+          value: 9e6323679b48287647e2e89a145bdb00
+        - name: K8S_NODE_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: spec.nodeName
+        - name: NODE_IPV4
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: status.hostIP
+        - name: OPENSHIFT_CLUSTER_ID
+          value: 9301d037-05ca-4a2e-a54e-e2988104ddf1
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: status.podIP
+        - name: POD_IPS
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: status.podIPs
+        - name: TRUSTED_CA_HASH
+          value: 867df30db0268af97a2c0485e934076d
+        - name: VECTOR_LOG
+          value: warn
+        - name: KUBERNETES_SERVICE_HOST
+          value: kubernetes.default.svc
+        - name: VECTOR_SELF_NODE_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: spec.nodeName
+      securityContext:
+        capabilities:
+          drop:
+            - CHOWN
+            - DAC_OVERRIDE
+            - FOWNER
+            - FSETID
+            - KILL
+            - NET_BIND_SERVICE
+            - SETGID
+            - SETPCAP
+            - SETUID
+        seLinuxOptions:
+          type: spc_t
+        readOnlyRootFilesystem: true
+        allowPrivilegeEscalation: false
+        seccompProfile:
+          type: RuntimeDefault
+      ports:
+        - name: metrics
+          containerPort: 24231
+          protocol: TCP
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+        - name: metrics
+          readOnly: true
+          mountPath: /etc/collector/metrics
+        - name: tmp
+          mountPath: /tmp
+        - name: varlogpods
+          readOnly: true
+          mountPath: /var/log/pods
+        - name: varlogjournal
+          readOnly: true
+          mountPath: /var/log/journal
+        - name: varlogaudit
+          readOnly: true
+          mountPath: /var/log/audit
+        - name: varlogkubeapiserver
+          readOnly: true
+          mountPath: /var/log/kube-apiserver
+        - name: varlogopenshiftapiserver
+          readOnly: true
+          mountPath: /var/log/openshift-apiserver
+        - name: varlogoauthserver
+          readOnly: true
+          mountPath: /var/log/oauth-server
+        - name: varlogoauthapiserver
+          readOnly: true
+          mountPath: /var/log/oauth-apiserver
+        - name: varlogovn
+          readOnly: true
+          mountPath: /var/log/ovn
+        - name: logging-collector-token
+          readOnly: true
+          mountPath: /var/run/ocp-collector/secrets/logging-collector-token
+        - name: config-openshift-service-cacrt
+          readOnly: true
+          mountPath: /var/run/ocp-collector/config/openshift-service-ca.crt
+        - name: sa-token
+          readOnly: true
+          mountPath: /var/run/ocp-collector/serviceaccount
+        - name: trusted-ca
+          readOnly: true
+          mountPath: /etc/pki/ca-trust/extracted/pem/
+        - name: config
+          readOnly: true
+          mountPath: /etc/vector
+        - name: datadir
+          mountPath: /var/lib/vector
+        - name: entrypoint
+          readOnly: true
+          mountPath: /usr/bin/run-vector.sh
+          subPath: run-vector.sh
+        - name: kube-api-access-xv85l
+          readOnly: true
+          mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      terminationMessagePolicy: FallbackToLogsOnError
+      image: 'registry.redhat.io/openshift-logging/vector-rhel9@sha256:1f714ef0b4daa47fe7a8da7343411c48fc90212733b960197b0f14680b92351f'
+      args:
+        - /usr/bin/run-vector.sh
+  serviceAccount: logging-collector
+  volumes:
+    - name: metrics
+      secret:
+        secretName: instance-metrics
+        defaultMode: 420
+    - name: tmp
+      emptyDir:
+        medium: Memory
+    - name: varlogpods
+      hostPath:
+        path: /var/log/pods
+        type: ''
+    - name: varlogjournal
+      hostPath:
+        path: /var/log/journal
+        type: ''
+    - name: varlogaudit
+      hostPath:
+        path: /var/log/audit
+        type: ''
+    - name: varlogovn
+      hostPath:
+        path: /var/log/ovn
+        type: ''
+    - name: varlogoauthserver
+      hostPath:
+        path: /var/log/oauth-server
+        type: ''
+    - name: varlogoauthapiserver
+      hostPath:
+        path: /var/log/oauth-apiserver
+        type: ''
+    - name: varlogopenshiftapiserver
+      hostPath:
+        path: /var/log/openshift-apiserver
+        type: ''
+    - name: varlogkubeapiserver
+      hostPath:
+        path: /var/log/kube-apiserver
+        type: ''
+    - name: logging-collector-token
+      secret:
+        secretName: logging-collector-token
+        defaultMode: 420
+    - name: config-openshift-service-cacrt
+      configMap:
+        name: openshift-service-ca.crt
+        defaultMode: 420
+    - name: sa-token
+      projected:
+        sources:
+          - serviceAccountToken:
+              audience: openshift
+              expirationSeconds: 3600
+              path: token
+        defaultMode: 420
+    - name: trusted-ca
+      configMap:
+        name: instance-trustbundle
+        items:
+          - key: ca-bundle.crt
+            path: tls-ca-bundle.pem
+        defaultMode: 420
+    - name: config
+      configMap:
+        name: instance-config
+        defaultMode: 420
+    - name: datadir
+      hostPath:
+        path: /var/lib/vector
+        type: ''
+    - name: entrypoint
+      configMap:
+        name: instance-config
+        defaultMode: 420
+    - name: kube-api-access-xv85l
+      projected:
+        sources:
+          - serviceAccountToken:
+              expirationSeconds: 3607
+              path: token
+          - configMap:
+              name: kube-root-ca.crt
+              items:
+                - key: ca.crt
+                  path: ca.crt
+          - downwardAPI:
+              items:
+                - path: namespace
+                  fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.namespace
+          - configMap:
+              name: openshift-service-ca.crt
+              items:
+                - key: service-ca.crt
+                  path: service-ca.crt
+        defaultMode: 420
+  dnsPolicy: ClusterFirst
+  tolerations:
+    - key: node-role.kubernetes.io/master
+      operator: Exists
+      effect: NoSchedule
+    - key: node.kubernetes.io/disk-pressure
+      operator: Exists
+      effect: NoSchedule
+    - key: node.kubernetes.io/not-ready
+      operator: Exists
+      effect: NoExecute
+    - key: node.kubernetes.io/unreachable
+      operator: Exists
+      effect: NoExecute
+    - key: node.kubernetes.io/memory-pressure
+      operator: Exists
+      effect: NoSchedule
+    - key: node.kubernetes.io/pid-pressure
+      operator: Exists
+      effect: NoSchedule
+    - key: node.kubernetes.io/unschedulable
+      operator: Exists
+      effect: NoSchedule
+  priorityClassName: system-node-critical
+status:
+  containerStatuses:
+    - restartCount: 0
+      started: true
+      ready: true
+      name: collector
+      state:
+        running:
+          startedAt: '2025-12-03T09:41:20Z'
+      volumeMounts:
+        - name: metrics
+          mountPath: /etc/collector/metrics
+          readOnly: true
+          recursiveReadOnly: Disabled
+        - name: tmp
+          mountPath: /tmp
+        - name: varlogpods
+          mountPath: /var/log/pods
+          readOnly: true
+          recursiveReadOnly: Disabled
+        - name: varlogjournal
+          mountPath: /var/log/journal
+          readOnly: true
+          recursiveReadOnly: Disabled
+        - name: varlogaudit
+          mountPath: /var/log/audit
+          readOnly: true
+          recursiveReadOnly: Disabled
+        - name: varlogkubeapiserver
+          mountPath: /var/log/kube-apiserver
+          readOnly: true
+          recursiveReadOnly: Disabled
+        - name: varlogopenshiftapiserver
+          mountPath: /var/log/openshift-apiserver
+          readOnly: true
+          recursiveReadOnly: Disabled
+        - name: varlogoauthserver
+          mountPath: /var/log/oauth-server
+          readOnly: true
+          recursiveReadOnly: Disabled
+        - name: varlogoauthapiserver
+          mountPath: /var/log/oauth-apiserver
+          readOnly: true
+          recursiveReadOnly: Disabled
+        - name: varlogovn
+          mountPath: /var/log/ovn
+          readOnly: true
+          recursiveReadOnly: Disabled
+        - name: logging-collector-token
+          mountPath: /var/run/ocp-collector/secrets/logging-collector-token
+          readOnly: true
+          recursiveReadOnly: Disabled
+        - name: config-openshift-service-cacrt
+          mountPath: /var/run/ocp-collector/config/openshift-service-ca.crt
+          readOnly: true
+          recursiveReadOnly: Disabled
+        - name: sa-token
+          mountPath: /var/run/ocp-collector/serviceaccount
+          readOnly: true
+          recursiveReadOnly: Disabled
+        - name: trusted-ca
+          mountPath: /etc/pki/ca-trust/extracted/pem/
+          readOnly: true
+          recursiveReadOnly: Disabled
+        - name: config
+          mountPath: /etc/vector
+          readOnly: true
+          recursiveReadOnly: Disabled
+        - name: datadir
+          mountPath: /var/lib/vector
+        - name: entrypoint
+          mountPath: /usr/bin/run-vector.sh
+          readOnly: true
+          recursiveReadOnly: Disabled
+        - name: kube-api-access-xv85l
+          mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+          readOnly: true
+          recursiveReadOnly: Disabled
+      imageID: 'registry.redhat.io/openshift-logging/vector-rhel9@sha256:1f714ef0b4daa47fe7a8da7343411c48fc90212733b960197b0f14680b92351f'
+      image: 'registry.redhat.io/openshift-logging/vector-rhel9@sha256:1f714ef0b4daa47fe7a8da7343411c48fc90212733b960197b0f14680b92351f'
+      lastState: {}
+      containerID: 'cri-o://9fcaeb26289b16cb1b5f7fa4a32d2704f6c21736660dba27292c9ae84cc29ea5'
+  qosClass: Burstable
+  hostIPs:
+    - ip: 10.0.62.107
+  podIPs:
+    - ip: 10.128.0.184
+  podIP: 10.128.0.184
+  hostIP: 10.0.62.107
+  startTime: '2025-12-03T09:41:20Z'
+  conditions:
+    - type: PodReadyToStartContainers
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2025-12-03T09:41:21Z'
+    - type: Initialized
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2025-12-03T09:41:20Z'
+    - type: Ready
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2025-12-03T09:41:21Z'
+    - type: ContainersReady
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2025-12-03T09:41:21Z'
+    - type: PodScheduled
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2025-12-03T09:41:20Z'
+  phase: Running

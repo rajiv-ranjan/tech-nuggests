@@ -1,0 +1,33 @@
+apiVersion: loki.grafana.com/v1
+kind: LokiStack
+metadata:
+  name: loki
+  namespace: netobserv 
+spec:
+  size: 1x.small 
+  storage:
+    schemas:
+    - version: v13
+      effectiveDate: '2025-12-21'
+    secret:
+      name: netobserv-loki-store-minio-secret
+      type: s3
+  storageClassName: gp3-csi 
+  tenants:
+    mode: openshift-network
+    openshift:
+      adminGroups: 
+      - cluster-admin
+
+# # 
+# spec:
+#   limits:
+#     global:
+#       ingestion:
+#         ingestionBurstSize: 40
+#         ingestionRate: 20
+#         maxGlobalStreamsPerTenant: 25000
+#       queries:
+#         maxChunksPerQuery: 2000000
+#         maxEntriesLimitPerQuery: 10000
+#         maxQuerySeries: 3000

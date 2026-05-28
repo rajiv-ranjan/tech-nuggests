@@ -1,0 +1,31 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: protect-petclinic-from-privileged
+  namespace: pet-clinic
+spec:
+  # 1. Select the TARGET pods to protect
+  podSelector:
+    matchLabels:
+      app: quarkus-petclinic-git
+  policyTypes:
+  - Ingress
+  ingress:
+  # 2. Allow traffic from ALL namespaces EXCEPT the bad one ("1-3-privileged")
+  - from:
+    - namespaceSelector:
+        matchExpressions:
+        - key: kubernetes.io/metadata.name
+          operator: NotIn
+          values: ["1-3-privileged"]
+  
+  # 3. Allow traffic FROM the bad namespace, ONLY if the pod is NOT the bad one
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: "1-3-privileged"
+      podSelector:
+        matchExpressions:
+        - key: app
+          operator: NotIn
+          values: ["security-demo"]

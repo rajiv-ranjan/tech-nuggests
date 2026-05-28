@@ -1,0 +1,47 @@
+apiVersion: observability.openshift.io/v1
+kind: ClusterLogForwarder
+metadata:
+  name: instance
+  namespace: openshift-logging
+spec:
+  filters:
+    - name: detect-multiline-exception
+      type: detectMultilineException
+  managementState: Managed
+  outputs:
+    - lokiStack:
+        authentication:
+          token:
+            from: serviceAccount
+        target:
+          name: logging-loki
+          namespace: openshift-logging
+        tuning:
+          compression: none
+          deliveryMode: AtLeastOnce
+          maxRetryDuration: 10
+          minRetryDuration: 30
+      name: lokistack-out
+      tls:
+        ca:
+          configMapName: openshift-service-ca.crt
+          key: service-ca.crt
+      type: lokiStack
+  pipelines:
+    - filterRefs:
+        - detect-multiline-exception
+      inputRefs:
+        - audit
+        - application
+        - infrastructure
+      name: infra-app-logs
+      outputRefs:
+        - lokistack-out
+
+    - inputRefs:
+        - audit
+      name: audit-logs
+      outputRefs:
+        - splunk-out
+  serviceAccount:
+    name: logging-collector

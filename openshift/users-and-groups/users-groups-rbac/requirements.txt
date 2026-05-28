@@ -1,0 +1,7 @@
+# Python dependencies
+python-dotenv==1.0.0
+
+# System requirements:
+# - oc CLI tool (OpenShift command-line interface)
+# - htpasswd utility (from apache2-utils or httpd-tools)
+
