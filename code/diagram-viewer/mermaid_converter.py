@@ -81,18 +81,23 @@ class MermaidConverter:
         logger.debug(f"Found {len(mermaid_files)} mermaid files")
         return mermaid_files
 
-    def _run_mmdc(self, input_path: Path, output_path: Path) -> bool:
+    def _run_mmdc(self, input_path: Path, output_path: Path, scale: int = 1) -> bool:
         """
         Execute mmdc CLI command to convert a mermaid file
 
         Args:
             input_path: Path to input .mmd file
-            output_path: Path to output file (SVG or HTML)
+            output_path: Path to output file (SVG, PNG, or PDF)
+            scale: Scale factor for PNG output (default: 1, recommended: 4 for high quality)
 
         Returns:
             True if conversion succeeded, False otherwise
         """
         cmd = ['mmdc', '-i', str(input_path), '-o', str(output_path)]
+
+        # Add scale factor for PNG files to improve quality
+        if output_path.suffix == '.png' and scale > 1:
+            cmd.extend(['-s', str(scale)])
 
         logger.debug(f"Executing: {' '.join(cmd)}")
 
@@ -178,26 +183,30 @@ class MermaidConverter:
             logger.error(f"✗ Error creating HTML for {svg_path.name}: {e}")
             return False
 
-    def convert_file(self, mmd_path: Path) -> Tuple[Optional[Path], Optional[Path]]:
+    def convert_file(self, mmd_path: Path) -> Tuple[Optional[Path], Optional[Path], Optional[Path], Optional[Path]]:
         """
-        Convert a single .mmd file to SVG and HTML in a generated-diagram folder
+        Convert a single .mmd file to SVG, HTML, PNG, and PDF in a generated-diagram folder
 
         Args:
             mmd_path: Path to the .mmd or .mermaid file
 
         Returns:
-            Tuple of (svg_path, html_path) if successful, (None, None) on error
+            Tuple of (svg_path, html_path, png_path, pdf_path) if successful, (None, None, None, None) on error
         """
         # Create generated-diagram folder in the same directory as the .mmd file
         generated_dir = mmd_path.parent / 'generated-diagram'
         svg_path = generated_dir / f"{mmd_path.stem}.svg"
         html_path = generated_dir / f"{mmd_path.stem}.html"
+        png_path = generated_dir / f"{mmd_path.stem}.png"
+        pdf_path = generated_dir / f"{mmd_path.stem}.pdf"
 
         if self.dry_run:
             logger.info(f"[DRY RUN] Would convert: {mmd_path.relative_to(self.root_dir)}")
             logger.info(f"          → {svg_path.relative_to(self.root_dir)}")
             logger.info(f"          → {html_path.relative_to(self.root_dir)}")
-            return (svg_path, html_path)
+            logger.info(f"          → {png_path.relative_to(self.root_dir)}")
+            logger.info(f"          → {pdf_path.relative_to(self.root_dir)}")
+            return (svg_path, html_path, png_path, pdf_path)
 
         logger.info(f"Converting: {mmd_path.relative_to(self.root_dir)}")
 
@@ -207,23 +216,29 @@ class MermaidConverter:
             logger.debug(f"Created directory: {generated_dir.relative_to(self.root_dir)}")
         except Exception as e:
             logger.error(f"✗ Error creating directory {generated_dir}: {e}")
-            return (None, None)
+            return (None, None, None, None)
 
         # Generate SVG using mmdc
         svg_success = self._run_mmdc(mmd_path, svg_path)
 
         if not svg_success:
-            return (None, None)
+            return (None, None, None, None)
+
+        # Generate high-quality PNG using mmdc with 4x scale for crisp output
+        png_success = self._run_mmdc(mmd_path, png_path, scale=4)
+
+        # Generate PDF using mmdc (vector-based, no quality loss)
+        pdf_success = self._run_mmdc(mmd_path, pdf_path)
 
         # Create self-contained HTML from SVG
         title = mmd_path.stem.replace('-', ' ').replace('_', ' ').title()
         html_success = self._create_html_from_svg(svg_path, html_path, title)
 
-        if svg_success and html_success:
-            logger.info(f"✓ {mmd_path.relative_to(self.root_dir)} → SVG, HTML")
-            return (svg_path, html_path)
+        if svg_success and html_success and png_success and pdf_success:
+            logger.info(f"✓ {mmd_path.relative_to(self.root_dir)} → SVG, HTML, PNG (4x), PDF")
+            return (svg_path, html_path, png_path, pdf_path)
         else:
-            return (None, None)
+            return (None, None, None, None)
 
     def convert_all(self) -> Dict[str, int]:
         """
@@ -243,9 +258,9 @@ class MermaidConverter:
         stats = {'total': len(mermaid_files), 'success': 0, 'failed': 0}
 
         for mmd_file in mermaid_files:
-            svg_path, html_path = self.convert_file(mmd_file)
+            svg_path, html_path, png_path, pdf_path = self.convert_file(mmd_file)
 
-            if svg_path and html_path:
+            if svg_path and html_path and png_path and pdf_path:
                 stats['success'] += 1
             else:
                 stats['failed'] += 1

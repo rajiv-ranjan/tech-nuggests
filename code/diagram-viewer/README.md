@@ -1,11 +1,11 @@
 # Diagram Viewer
 
-A Python utility that converts Mermaid diagram files (`.mmd`, `.mermaid`) to offline-viewable SVG and HTML formats, generates a navigable index page, and optionally serves them via HTTP.
+A Python utility that converts Mermaid diagram files (`.mmd`, `.mermaid`) to offline-viewable SVG, HTML, PNG, and PDF formats, generates a navigable index page, and optionally serves them via HTTP.
 
 ## Features
 
 - 📊 **Batch Conversion**: Recursively scans and converts all Mermaid files in the repository
-- 🎨 **Multiple Formats**: Generates both SVG (vector graphics) and self-contained HTML
+- 🎨 **Multiple Formats**: Generates SVG (vector graphics), self-contained HTML, PNG (high-quality raster at 4x scale), and PDF (vector-based)
 - 📁 **Organized Output**: Generated files are placed in `generated-diagram` folders, keeping source and output separated
 - 📑 **Index Page**: Auto-generates a navigable index with collapsible directory tree
 - 🌐 **HTTP Server**: Built-in server for browsing diagrams in your browser
@@ -61,7 +61,7 @@ uv sync
 
 ### Basic Conversion
 
-Convert all `.mmd` and `.mermaid` files to SVG and HTML:
+Convert all `.mmd` and `.mermaid` files to SVG, HTML, PNG, and PDF:
 
 ```bash
 uv run python mermaid_converter.py
@@ -69,7 +69,7 @@ uv run python mermaid_converter.py
 
 This will:
 - Scan the entire `tech-nuggests` repository
-- Convert each `.mmd` file to `.svg` and `.html` in a `generated-diagram` subfolder
+- Convert each `.mmd` file to `.svg`, `.html`, `.png` (4x scale), and `.pdf` in a `generated-diagram` subfolder
 - Generate `diagram-index.html` in the repository root
 
 ### Dry Run
@@ -138,10 +138,12 @@ uv run python mermaid_converter.py --root-dir /path/to/other/directory
 
 ### Per Mermaid File
 
-For each `.mmd` or `.mermaid` file, two files are generated in a `generated-diagram` subfolder:
+For each `.mmd` or `.mermaid` file, four files are generated in a `generated-diagram` subfolder:
 
 - `filename.svg` - Vector graphic (scalable, can be embedded in docs)
 - `filename.html` - Self-contained HTML with embedded diagram
+- `filename.png` - High-quality raster image (4x scale for crisp display)
+- `filename.pdf` - Vector-based PDF (perfect for printing and presentations, no quality loss)
 
 The `generated-diagram` folder is automatically created in the same directory as the source `.mmd` file, keeping generated files cleanly separated from source files.
 
@@ -149,10 +151,12 @@ Example:
 ```
 advance-cluster-security/
 └── vulnerability-management/
-    ├── roxctl-scan-v1.mmd       # Source
-    └── generated-diagram/       # Auto-created folder
-        ├── roxctl-scan-v1.svg   # Generated SVG
-        └── roxctl-scan-v1.html  # Generated HTML
+    ├── roxctl-scan-v1.mmd        # Source
+    └── generated-diagram/        # Auto-created folder
+        ├── roxctl-scan-v1.svg    # Generated SVG
+        ├── roxctl-scan-v1.html   # Generated HTML
+        ├── roxctl-scan-v1.png    # Generated PNG (4x quality)
+        └── roxctl-scan-v1.pdf    # Generated PDF
 ```
 
 **Note:** The `generated-diagram` folders are automatically added to `.gitignore` to keep your repository clean.
@@ -187,7 +191,7 @@ The index page features:
 
 **Organized Repository:**
 - No mixing of source and generated files
-- Clear distinction between what to edit (`.mmd`) and what is auto-generated (`.svg`, `.html`)
+- Clear distinction between what to edit (`.mmd`) and what is auto-generated (`.svg`, `.html`, `.png`, `.pdf`)
 
 ## Command-Line Options
 
@@ -235,7 +239,7 @@ If you had previously generated files directly alongside `.mmd` files (before th
 
 ```bash
 # From the tech-nuggests root directory
-find . -name "*.mmd" -exec sh -c 'rm -f "${1%.mmd}.svg" "${1%.mmd}.html"' _ {} \;
+find . -name "*.mmd" -exec sh -c 'rm -f "${1%.mmd}.svg" "${1%.mmd}.html" "${1%.mmd}.png" "${1%.mmd}.pdf"' _ {} \;
 ```
 
 Then re-run the converter to generate fresh files in the new `generated-diagram` folders.
@@ -276,7 +280,7 @@ Output:
 Root directory: /Users/you/tech-nuggests
 Found 4 mermaid file(s)
 Converting: advance-cluster-security/vulnerability-management/roxctl-scan-v1.mmd
-✓ advance-cluster-security/vulnerability-management/roxctl-scan-v1.mmd → SVG, HTML
+✓ advance-cluster-security/vulnerability-management/roxctl-scan-v1.mmd → SVG, HTML, PNG (4x), PDF
 ...
 
 Conversion complete: 4/4 succeeded, 0 failed
