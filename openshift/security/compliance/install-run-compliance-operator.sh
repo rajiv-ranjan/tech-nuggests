@@ -29,10 +29,10 @@ INSTALL_PLAN_APPROVAL="${INSTALL_PLAN_APPROVAL:-Automatic}"
 WAIT_TIMEOUT="${WAIT_TIMEOUT:-600}"
 SCAN_WAIT_TIMEOUT="${SCAN_WAIT_TIMEOUT:-7200}"
 
-SCAN_SETTING_YAML="${SCAN_SETTING_YAML:-${SCRIPT_DIR}/scan-setting-bank-mobile-banking-app.yaml}"
+SCAN_SETTING_YAML="${SCAN_SETTING_YAML:-${SCRIPT_DIR}/scan-setting-mobile-banking-app.yaml}"
 SCAN_BINDING_YAML="${SCAN_BINDING_YAML:-${SCRIPT_DIR}/scan-setting-binding-cis-compliance.yaml}"
 # ComplianceSuite name matches ScanSettingBinding metadata.name in scan-setting-binding-cis-compliance.yaml
-SUITE_NAME="${SUITE_NAME:-bank-mobile-banking-app-cis-compliance}"
+SUITE_NAME="${SUITE_NAME:-mobile-banking-app-cis-compliance}"
 # Filter results/remediations by suite label (defaults to SUITE_NAME); override with --suite
 COMPLIANCE_SUITE_LABEL="${COMPLIANCE_SUITE_LABEL:-}"
 

@@ -20,10 +20,10 @@ Official reference: [OpenShift Container Platform — Security and compliance](h
 | File | Purpose |
 |------|---------|
 | [install-run-compliance-operator.sh](install-run-compliance-operator.sh) | Installs the operator, applies scan manifests, waits for scans, prints results and remediations. |
-| [scan-setting-bank-mobile-banking-app.yaml](scan-setting-bank-mobile-banking-app.yaml) | `ScanSetting`: schedule, node roles, storage for raw results, timeouts. |
+| [scan-setting-mobile-banking-app.yaml](scan-setting-mobile-banking-app.yaml) | `ScanSetting`: schedule, node roles, storage for raw results, timeouts. |
 | [scan-setting-binding-cis-compliance.yaml](scan-setting-binding-cis-compliance.yaml) | `ScanSettingBinding`: binds **ocp4-cis** + **ocp4-cis-node** to the `ScanSetting` above. |
 
-Default ComplianceSuite name (from the binding): **`bank-mobile-banking-app-cis-compliance`**.
+Default ComplianceSuite name (from the binding): **`mobile-banking-app-cis-compliance`**.
 
 ---
 
@@ -53,7 +53,7 @@ Run `./install-run-compliance-operator.sh --help` for the full option list. Summ
 | Command | What it does |
 |---------|----------------|
 | `install` | Creates `Namespace`, `OperatorGroup`, and `Subscription` for the Compliance Operator (OLM). |
-| `run` | Applies `scan-setting-bank-mobile-banking-app.yaml` and `scan-setting-binding-cis-compliance.yaml`. |
+| `run` | Applies `scan-setting-mobile-banking-app.yaml` and `scan-setting-binding-cis-compliance.yaml`. |
 | `all` | Runs `install` then `run`. |
 | `results` | Prints suites, scans, `ComplianceCheckResult` summary, failures, and `ComplianceRemediation` objects (with optional suite filter). |
 
@@ -76,16 +76,16 @@ Run `./install-run-compliance-operator.sh --help` for the full option list. Summ
 | `NAMESPACE` | `openshift-compliance` | Project for operator and scans. |
 | `CHANNEL` | `stable` | Operator subscription channel. |
 | `INSTALL_PLAN_APPROVAL` | `Automatic` | OLM install plan approval. |
-| `SCAN_SETTING_YAML` | `scan-setting-bank-mobile-banking-app.yaml` (next to script) | Path to `ScanSetting`. |
+| `SCAN_SETTING_YAML` | `scan-setting-mobile-banking-app.yaml` (next to script) | Path to `ScanSetting`. |
 | `SCAN_BINDING_YAML` | `scan-setting-binding-cis-compliance.yaml` (next to script) | Path to `ScanSettingBinding`. |
-| `SUITE_NAME` | `bank-mobile-banking-app-cis-compliance` | Suite name for **wait** and default **results** filter. |
+| `SUITE_NAME` | `mobile-banking-app-cis-compliance` | Suite name for **wait** and default **results** filter. |
 | `COMPLIANCE_SUITE_LABEL` | (empty; falls back to `SUITE_NAME`) | Override suite label for `results` without `--suite`. |
 
 Example:
 
 ```bash
 export NAMESPACE=openshift-compliance
-export SUITE_NAME=bank-mobile-banking-app-cis-compliance
+export SUITE_NAME=mobile-banking-app-cis-compliance
 ./install-run-compliance-operator.sh run --wait --scan-wait-timeout 10800
 ./install-run-compliance-operator.sh results --suite "$SUITE_NAME"
 ```
@@ -152,7 +152,7 @@ Follow Red Hat guidance for your environment before applying remediations in pro
 If you prefer plain `oc`:
 
 ```bash
-oc apply -f scan-setting-bank-mobile-banking-app.yaml
+oc apply -f scan-setting-mobile-banking-app.yaml
 oc apply -f scan-setting-binding-cis-compliance.yaml
 ```
 

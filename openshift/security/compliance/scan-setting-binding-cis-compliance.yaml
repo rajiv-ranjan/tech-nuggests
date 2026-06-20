@@ -1,7 +1,7 @@
 apiVersion: compliance.openshift.io/v1alpha1
 kind: ScanSettingBinding
 metadata:
-  name: bank-mobile-banking-app-cis-compliance
+  name: mobile-banking-app-cis-compliance
   namespace: openshift-compliance
 profiles:
   - name: ocp4-cis-node
@@ -11,6 +11,6 @@ profiles:
     kind: Profile
     apiGroup: compliance.openshift.io/v1alpha1
 settingsRef:
-  name: bank-mobile-banking-app
+  name: mobile-banking-app
   kind: ScanSetting
   apiGroup: compliance.openshift.io/v1alpha1
